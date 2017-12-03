@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Catalogue Movie</string>
+    <string name="search">Cari</string>
+    <string name="title">Captain America</string>
 </resources>

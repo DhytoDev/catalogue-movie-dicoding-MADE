@@ -2,6 +2,7 @@ package com.dhytodev.cataloguemovie.data.network;
 
 import com.dhytodev.cataloguemovie.BuildConfig;
 import com.dhytodev.cataloguemovie.data.model.MoviesResponse;
+import com.dhytodev.cataloguemovie.data.model.TrailerResponse;
 
 import io.reactivex.Observable;
 import okhttp3.OkHttpClient;
@@ -10,6 +11,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -20,6 +22,9 @@ public interface MovieService {
 
     @GET("search/movie")
     Observable<MoviesResponse> searchMovies(@Query("query") String movieName) ;
+
+    @GET("movie/{id}/videos")
+    Observable<TrailerResponse> getMovieTrailers(@Path("id") String movieId);
 
     class ServiceGenerator {
         public static MovieService instance() {

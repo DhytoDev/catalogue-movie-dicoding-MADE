@@ -1,16 +1,20 @@
 package com.dhytodev.cataloguemovie.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ProgressBar;
 
 import com.dhytodev.cataloguemovie.R;
 import com.dhytodev.cataloguemovie.data.model.Movie;
 import com.dhytodev.cataloguemovie.data.network.MovieService;
+import com.dhytodev.cataloguemovie.ui.detail.DetailActivity;
 import com.dhytodev.mybasemvp.BaseActivity;
 import com.dhytodev.mybasemvp.BaseRvAdapter;
 import com.dhytodev.mybasemvp.listener.RecyclerViewItemClickListener;
@@ -22,20 +26,24 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class MainActivity extends BaseActivity implements MainView, RecyclerViewItemClickListener{
+public class MainActivity extends BaseActivity implements MainView, RecyclerViewItemClickListener {
 
     @BindView(R.id.rv_movies)
-    RecyclerView rvMovies ;
+    RecyclerView rvMovies;
     @BindView(R.id.edt_search_movie)
-    EditText etSearchMovie ;
+    EditText etSearchMovie;
     @BindView(R.id.btn_search)
-    Button btnSearch ;
+    Button btnSearch;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.loading_progress)
+    ProgressBar loadingProgress;
 
-    private MainInteractor mainInteractor ;
-    private MainPresenter<MainView, MainInteractor> mainPresenter ;
+    private MainInteractor mainInteractor;
+    private MainPresenter<MainView, MainInteractor> mainPresenter;
 
     private List<Movie> movies = new ArrayList<>();
-    private BaseRvAdapter<Movie, MovieViewHolder> adapter ;
+    private BaseRvAdapter<Movie, MovieViewHolder> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +52,6 @@ public class MainActivity extends BaseActivity implements MainView, RecyclerView
         setUnbinder(ButterKnife.bind(this));
         setUp();
 
-        mainInteractor = new MainInteractorImpl(MovieService.ServiceGenerator.instance());
-        mainPresenter = new MainPresenter<>(mainInteractor, new CompositeDisposable());
         mainPresenter.onAttach(this);
 
         btnSearch.setOnClickListener(view -> {
@@ -55,9 +61,26 @@ public class MainActivity extends BaseActivity implements MainView, RecyclerView
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mainPresenter.onDetach();
+    }
+
+    @Override
     protected void setUp() {
+
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setTitle(getString(R.string.app_name));
+        } else {
+            Log.e("toolbar", "toolbar is null !");
+        }
+
+        mainInteractor = new MainInteractorImpl(MovieService.ServiceGenerator.instance());
+        mainPresenter = new MainPresenter<>(mainInteractor, new CompositeDisposable());
+
         rvMovies.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvMovies.setLayoutManager(layoutManager);
 
         adapter = new BaseRvAdapter<Movie, MovieViewHolder>(R.layout.movie_item, MovieViewHolder.class, movies, this) {
@@ -73,6 +96,13 @@ public class MainActivity extends BaseActivity implements MainView, RecyclerView
 
     @Override
     public void showLoading(boolean isShowLoading) {
+        if (isShowLoading) {
+            loadingProgress.setVisibility(View.VISIBLE);
+            rvMovies.setVisibility(View.GONE);
+        } else {
+            loadingProgress.setVisibility(View.GONE);
+            rvMovies.setVisibility(View.VISIBLE);
+        }
 
     }
 
@@ -87,6 +117,8 @@ public class MainActivity extends BaseActivity implements MainView, RecyclerView
     @Override
     public void onItemClicked(int position) {
         Movie movie = movies.get(position);
-        Toast.makeText(this, movie.getTitle(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, DetailActivity.class);
+        intent.putExtra(DetailActivity.MOVIE_INTENT, movie);
+        startActivity(intent);
     }
 }

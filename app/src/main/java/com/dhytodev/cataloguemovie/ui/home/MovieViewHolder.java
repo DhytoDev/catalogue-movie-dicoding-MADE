@@ -37,6 +37,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder  {
     public void bind(Movie movie, Context context) {
         Glide.with(context)
                 .load(BuildConfig.API_POSTER_PATH + movie.getPosterPath())
+                .placeholder(R.drawable.ic_placeholder)
                 .into(moviePoster);
         movieTitle.setText(movie.getTitle());
         movieOverview.setText(movie.getOverview());

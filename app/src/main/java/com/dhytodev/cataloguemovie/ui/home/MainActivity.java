@@ -5,11 +5,14 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.dhytodev.cataloguemovie.R;
 import com.dhytodev.cataloguemovie.data.model.Movie;
@@ -38,6 +41,10 @@ public class MainActivity extends BaseActivity implements MainView, RecyclerView
     Toolbar toolbar;
     @BindView(R.id.loading_progress)
     ProgressBar loadingProgress;
+    @BindView(R.id.tv_status)
+    TextView tvStatus;
+    @BindView(R.id.status_layout)
+    LinearLayout statusLayout;
 
     private MainInteractor mainInteractor;
     private MainPresenter<MainView, MainInteractor> mainPresenter;
@@ -55,7 +62,14 @@ public class MainActivity extends BaseActivity implements MainView, RecyclerView
         mainPresenter.onAttach(this);
 
         btnSearch.setOnClickListener(view -> {
-            mainPresenter.getSearchMovies(etSearchMovie.getText().toString());
+            String query = etSearchMovie.getText().toString();
+
+            if (TextUtils.isEmpty(query)) {
+                etSearchMovie.setError(getString(R.string.text_empty));
+            } else {
+                mainPresenter.getSearchMovies(etSearchMovie.getText().toString());
+            }
+
         });
 
     }
@@ -99,6 +113,7 @@ public class MainActivity extends BaseActivity implements MainView, RecyclerView
         if (isShowLoading) {
             loadingProgress.setVisibility(View.VISIBLE);
             rvMovies.setVisibility(View.GONE);
+            statusLayout.setVisibility(View.GONE);
         } else {
             loadingProgress.setVisibility(View.GONE);
             rvMovies.setVisibility(View.VISIBLE);
@@ -111,6 +126,18 @@ public class MainActivity extends BaseActivity implements MainView, RecyclerView
         this.movies.clear();
         this.movies.addAll(movies);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showStatus(boolean isDataFound) {
+        if (isDataFound) {
+            statusLayout.setVisibility(View.GONE);
+            rvMovies.setVisibility(View.VISIBLE);
+        } else {
+            statusLayout.setVisibility(View.VISIBLE);
+            tvStatus.setText(getString(R.string.not_found));
+            rvMovies.setVisibility(View.GONE);
+        }
     }
 
 

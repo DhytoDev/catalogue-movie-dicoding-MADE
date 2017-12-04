@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="@dimen/content_margin_left">
+        android:padding="@dimen/content_margin_top">
 
         <EditText
             android:id="@+id/edt_search_movie"
@@ -38,8 +38,32 @@
         android:layout_gravity="center" />
 
     <android.support.v7.widget.RecyclerView
+        android:visibility="gone"
         android:layout_below="@+id/search_layout"
         android:id="@+id/rv_movies"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:id="@+id/status_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_placeholder"/>
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text=""
+            android:fontFamily="sans-serif"
+            style="@style/Base.TextAppearance.AppCompat.Medium"/>
+    </LinearLayout>
 </RelativeLayout>

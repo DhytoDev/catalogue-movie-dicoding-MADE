@@ -12,4 +12,5 @@ import java.util.List;
 public interface MainView extends MvpView {
     void showLoading(boolean isShowLoading);
     void displayMovies(List<Movie> movies);
+    void showStatus(boolean isDataFound);
 }

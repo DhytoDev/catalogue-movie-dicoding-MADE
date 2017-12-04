@@ -44,19 +44,19 @@ public class DetailActivity extends BaseActivity implements DetailView, View.OnC
     CollapsingToolbarLayout collapsingToolbar;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.tv_show_backdrop)
+    @BindView(R.id.movie_backdrop)
     ImageView movieBackdrop;
-    @BindView(R.id.tv_show_poster)
+    @BindView(R.id.movie_poster)
     ImageView moviePoster;
-    @BindView(R.id.tv_show_title)
+    @BindView(R.id.movie_title)
     TextView movieTitle;
-    @BindView(R.id.tv_show_rating)
+    @BindView(R.id.movie_rating)
     TextView movieRating;
-    @BindView(R.id.tv_show_vote_count)
+    @BindView(R.id.movie_vote_count)
     TextView movieVoteCount;
-    @BindView(R.id.tv_show_overview)
+    @BindView(R.id.movie_overview)
     TextView movieOverview;
-    @BindView(R.id.tv_show_background)
+    @BindView(R.id.movie_background)
     View movieBackground;
     @BindView(R.id.trailers_label)
     TextView trailersLabel;
@@ -64,19 +64,19 @@ public class DetailActivity extends BaseActivity implements DetailView, View.OnC
     LinearLayout trailersLayout;
     @BindView(R.id.trailers_container)
     HorizontalScrollView trailersContainer;
-    @BindView(R.id.tv_show_genre)
-    TextView movieGenre;
+    @BindView(R.id.movie_release_date)
+    TextView movieReleaseDate;
     @BindView(R.id.appbar)
     AppBarLayout appbar;
     @BindView(R.id.scrolling_container)
     NestedScrollView scrollingContainer;
     @BindView(R.id.loading_progress)
     ProgressBar loadingProgress;
-    @BindView(R.id.tv_summary)
+    @BindView(R.id.movie_summary)
     TextView movieSummary;
 
-    DetailInteractor detailInteractor ;
-    DetailPresenter detailPresenter ;
+    DetailInteractor detailInteractor;
+    DetailPresenter detailPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,10 +115,10 @@ public class DetailActivity extends BaseActivity implements DetailView, View.OnC
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         } else {
-            
+
         }
     }
-    
+
     private void displayDetails(Movie movie) {
         if (movie.getOverview().isEmpty()) {
             movieOverview.setVisibility(View.GONE);
@@ -132,6 +132,7 @@ public class DetailActivity extends BaseActivity implements DetailView, View.OnC
             movieRating.setText(String.format(getString(R.string.rating), String.valueOf(movie.getVoteAverage())));
             movieTitle.setText(movie.getTitle());
             movieVoteCount.setText(String.format(getString(R.string.vote_count), String.valueOf(movie.getVoteCount())));
+            movieReleaseDate.setText(String.format(getString(R.string.release_date), String.valueOf(movie.getReleaseDate())));
             collapsingToolbar.setTitle(movie.getTitle());
 
             Glide
@@ -176,24 +177,11 @@ public class DetailActivity extends BaseActivity implements DetailView, View.OnC
                 Picasso.with(this)
                         .load(trailer.getImageVideoUrl())
                         .centerCrop()
-                        .placeholder(R.color.colorPrimary)
+                        .placeholder(R.drawable.ic_placeholder)
                         .resizeDimen(R.dimen.video_width, R.dimen.video_height)
                         .into(thumbView);
                 trailersLayout.addView(thumbContainer);
             }
-        }
-    }
-
-    @Override
-    public void showLoading(boolean isShowLoading) {
-        if (isShowLoading) {
-            appbar.setVisibility(View.GONE);
-            scrollingContainer.setVisibility(View.GONE);
-            loadingProgress.setVisibility(View.VISIBLE);
-        } else {
-            appbar.setVisibility(View.VISIBLE);
-            scrollingContainer.setVisibility(View.VISIBLE);
-            loadingProgress.setVisibility(View.GONE);
         }
     }
 

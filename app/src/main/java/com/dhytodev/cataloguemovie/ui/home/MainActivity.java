@@ -107,7 +107,7 @@ public class MainActivity extends BaseActivity implements MainView, RecyclerView
     }
 
     @Override
-    public void displayTvShows(List<Movie> movies) {
+    public void displayMovies(List<Movie> movies) {
         this.movies.clear();
         this.movies.addAll(movies);
         adapter.notifyDataSetChanged();
@@ -115,7 +115,7 @@ public class MainActivity extends BaseActivity implements MainView, RecyclerView
 
 
     @Override
-    public void onItemClicked(int position) {
+    public void onItemClick(int position) {
         Movie movie = movies.get(position);
         Intent intent = new Intent(this, DetailActivity.class);
         intent.putExtra(DetailActivity.MOVIE_INTENT, movie);

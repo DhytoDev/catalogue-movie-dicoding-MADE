@@ -30,11 +30,13 @@ public class MainPresenter<V extends MainView,I extends MainInteractor> extends 
                     getMvpView().showLoading(false);
 
                     if(movies != null && movies.size() > 0) {
-                        getMvpView().displayTvShows(movies);
+                        getMvpView().displayMovies(movies);
 
                         for (Movie movie: movies) {
                             Log.e("movies", movie.getTitle());
                         }
+                    } else {
+                        getMvpView().onError("Film tidak ditemukan!");
                     }
                 }, throwable -> {
                     getMvpView().showLoading(false);

@@ -18,7 +18,7 @@ import java.util.List;
 
 public abstract class BaseRvAdapter<T, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
 
-    protected int layout;
+    private int layout;
     private Context context;
     private Class<VH> viewHolder;
     private List<T> data;
@@ -64,7 +64,7 @@ public abstract class BaseRvAdapter<T, VH extends RecyclerView.ViewHolder> exten
             @Override
             public void onClick(View view) {
                 int itemPosition = holder.getAdapterPosition() ;
-                recyclerViewItemClickListener.onItemClicked(itemPosition);
+                recyclerViewItemClickListener.onItemClick(itemPosition);
             }
         });
     }

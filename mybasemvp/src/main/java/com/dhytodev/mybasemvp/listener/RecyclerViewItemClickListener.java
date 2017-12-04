@@ -5,5 +5,5 @@ package com.dhytodev.mybasemvp.listener;
  */
 
 public interface RecyclerViewItemClickListener {
-    void onItemClicked(int position);
+    void onItemClick(int position);
 }

@@ -17,7 +17,6 @@ public class DetailPresenter extends BasePresenter<DetailView, DetailInteractor>
     }
 
     public void fetchTrailers(String id) {
-        getMvpView().showLoading(true);
         getCompositeDisposable()
                 .add(getInteractor().getMovieTrailers(id)
                         .subscribeOn(Schedulers.io())
@@ -25,11 +24,9 @@ public class DetailPresenter extends BasePresenter<DetailView, DetailInteractor>
                         .subscribe(trailers -> {
                             if (trailers != null && trailers.size() > 0) {
                                 getMvpView().displayTrailers(trailers);
-                                getMvpView().showLoading(false);
                             }
                         }, throwable -> {
                             getMvpView().onError(throwable.getLocalizedMessage());
-                            getMvpView().showLoading(false);
                         }));
     }
 }

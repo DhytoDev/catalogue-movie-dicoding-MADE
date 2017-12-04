@@ -7,6 +7,7 @@
 
     <string name="rating">%s/10</string>
     <string name="vote_count">(%s votes)</string>
+    <string name="release_date">Release date : %s</string>
     <string name="summary">Summary</string>
     <string name="trailers">Trailers</string>
     <string name="tv_show_title">Title</string>

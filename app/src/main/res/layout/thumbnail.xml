@@ -11,9 +11,8 @@
 
     <ImageView
         android:id="@+id/video_thumb"
-        android:layout_width="175dp"
-        android:layout_height="150dp"
-        android:scaleType="centerCrop"/>
+        android:layout_width="@dimen/video_width"
+        android:layout_height="@dimen/video_height" />
 
     <ImageView
         android:layout_width="@dimen/margin_32dp"

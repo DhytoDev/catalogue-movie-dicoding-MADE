@@ -1,38 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
-
-    <ImageView
-        android:id="@+id/iv_movie_poster"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:layout_weight="0.3"
-        android:scaleType="centerCrop"/>
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="@dimen/grid_item_margin"
+    app:cardCornerRadius="@dimen/grid_item_margin"
+    android:padding="@dimen/grid_item_margin"
+    android:layout_marginLeft="@dimen/content_margin_left"
+    android:layout_marginRight="@dimen/content_margin_left"
+    android:layout_marginTop="@dimen/content_margin_top"
+    android:layout_marginBottom="@dimen/content_margin_top">
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.7"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_movie_title"
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/iv_movie_poster"
+            android:layout_width="0dp"
+            android:layout_height="175dp"
+            android:layout_weight="0.35"
+            android:scaleType="centerCrop" />
+
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/title"/>
-        <TextView
-            android:id="@+id/tv_movie_overview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/title"
-            android:lines="1"/>
-        <TextView
-            android:id="@+id/tv_movie_release_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/title"/>
+            android:layout_weight="0.65"
+            android:orientation="vertical"
+            android:padding="@dimen/content_margin_top">
+
+            <TextView
+                android:id="@+id/tv_movie_title"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title"
+                android:fontFamily="sans-serif"/>
+
+            <TextView
+                android:id="@+id/tv_movie_overview"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="3"
+                android:text="@string/title"
+                android:fontFamily="sans-serif-light"/>
+
+            <TextView
+                android:id="@+id/tv_movie_release_date"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title"
+                android:fontFamily="sans-serif"/>
+        </LinearLayout>
+
     </LinearLayout>
-
-</LinearLayout>
+</android.support.v7.widget.CardView>

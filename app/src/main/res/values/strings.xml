@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Catalogue Movie</string>
-    <string name="search">Cari</string>
+    <string name="search">Search</string>
     <string name="title">Captain America</string>
     <string name="tv_show_backdrop">TV Shows Backdrop</string>
     <string name="tv_show_poster">Tv Show Poster</string>
@@ -13,4 +13,15 @@
     <string name="tv_show_title">Title</string>
     <string name="not_found">Film tidak ditemukan</string>
     <string name="text_empty">Field tidak boleh kosong</string>
+    <string name="title_activity_home">HomeActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="now_playing">Now Playing</string>
+    <string name="upcoming">Upcoming</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

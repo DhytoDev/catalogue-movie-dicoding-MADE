@@ -18,6 +18,11 @@ import com.dhytodev.cataloguemovie.R;
 import com.dhytodev.cataloguemovie.data.model.Movie;
 import com.dhytodev.cataloguemovie.data.network.MovieService;
 import com.dhytodev.cataloguemovie.ui.detail.DetailActivity;
+import com.dhytodev.cataloguemovie.ui.main.MainInteractor;
+import com.dhytodev.cataloguemovie.ui.main.MainInteractorImpl;
+import com.dhytodev.cataloguemovie.ui.main.MainPresenter;
+import com.dhytodev.cataloguemovie.ui.main.MainView;
+import com.dhytodev.cataloguemovie.ui.main.MovieViewHolder;
 import com.dhytodev.mybasemvp.BaseActivity;
 import com.dhytodev.mybasemvp.BaseRvAdapter;
 import com.dhytodev.mybasemvp.listener.RecyclerViewItemClickListener;
@@ -128,7 +133,7 @@ public class MainActivity extends BaseActivity implements MainView, RecyclerView
         adapter.notifyDataSetChanged();
     }
 
-    @Override
+   /* @Override
     public void showStatus(boolean isDataFound) {
         if (isDataFound) {
             statusLayout.setVisibility(View.GONE);
@@ -138,7 +143,7 @@ public class MainActivity extends BaseActivity implements MainView, RecyclerView
             tvStatus.setText(getString(R.string.not_found));
             rvMovies.setVisibility(View.GONE);
         }
-    }
+    }*/
 
 
     @Override

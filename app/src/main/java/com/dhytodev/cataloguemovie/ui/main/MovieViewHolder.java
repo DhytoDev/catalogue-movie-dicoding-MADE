@@ -1,4 +1,4 @@
-package com.dhytodev.cataloguemovie.ui.home;
+package com.dhytodev.cataloguemovie.ui.main;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

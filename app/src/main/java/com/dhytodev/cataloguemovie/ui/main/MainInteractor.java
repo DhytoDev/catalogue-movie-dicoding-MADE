@@ -1,4 +1,4 @@
-package com.dhytodev.cataloguemovie.ui.home;
+package com.dhytodev.cataloguemovie.ui.main;
 
 import com.dhytodev.cataloguemovie.data.model.Movie;
 import com.dhytodev.cataloguemovie.data.network.MovieService;
@@ -16,5 +16,7 @@ import io.reactivex.Observable;
 public interface MainInteractor extends MvpInteractor<MovieService> {
 
     Observable<List<Movie>> fetchSearchMovies(String movieName);
+    Observable<List<Movie>> fetchUpComingMovies();
+    Observable<List<Movie>> fetchNowPlayingMovies();
 
 }

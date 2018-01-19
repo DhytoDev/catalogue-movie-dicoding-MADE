@@ -1,9 +1,11 @@
 package com.dhytodev.cataloguemovie.ui.main;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.dhytodev.cataloguemovie.R;
 import com.dhytodev.cataloguemovie.ui.main.nav_menu.nowplaying.NowPlayingFragment;
 import com.dhytodev.cataloguemovie.ui.main.nav_menu.upcoming.UpcomingFragment;
 
@@ -13,17 +15,19 @@ import com.dhytodev.cataloguemovie.ui.main.nav_menu.upcoming.UpcomingFragment;
  */
 public class TabFragmentPagerAdapter extends FragmentPagerAdapter {
 
-    String[] title = new String[] { "Now Playing", "Upcoming" };
+    private Context context ;
 
+    String[] title ;
 
-
-    public TabFragmentPagerAdapter(FragmentManager fm) {
+    public TabFragmentPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
+        this.context = context ;
+        title = new String[] {context.getString(R.string.now_playing), context.getString(R.string.upcoming)};
     }
 
     @Override
     public Fragment getItem(int position) {
-        Fragment fragment = null ;
+        Fragment fragment = null;
         switch (position) {
             case 0:
                 fragment = new NowPlayingFragment();

@@ -3,7 +3,9 @@ package com.dhytodev.cataloguemovie.ui.main;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
@@ -23,7 +25,7 @@ import com.dhytodev.mybasemvp.BaseActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeActivity extends BaseActivity
+public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.toolbar)
@@ -37,12 +39,12 @@ public class HomeActivity extends BaseActivity
     @BindView(R.id.viewpager)
     ViewPager viewPager;
 
-    private SearchView searchView ;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_main);
         setUnbinder(ButterKnife.bind(this));
         setUp();
     }
@@ -58,7 +60,7 @@ public class HomeActivity extends BaseActivity
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        viewPager.setAdapter(new TabFragmentPagerAdapter(getSupportFragmentManager()));
+        viewPager.setAdapter(new TabFragmentPagerAdapter(getSupportFragmentManager(), this));
         tabLayout.setSmoothScrollingEnabled(true);
         tabLayout.setFillViewport(true);
         tabLayout.setupWithViewPager(viewPager);
@@ -92,10 +94,10 @@ public class HomeActivity extends BaseActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-
+        if (item.getItemId() == R.id.settings) {
+            Intent intent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
+            startActivity(intent);
+        }
 
         return super.onOptionsItemSelected(item);
     }

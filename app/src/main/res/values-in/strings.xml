@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Katalog Film</string>
+    <string name="search">Cari</string>
+    <string name="title">Captain America</string>
+    <string name="movie_backdrop">TV Shows Backdrop</string>
+    <string name="movie_poster">Tv Show Poster</string>
+
+    <string name="rating">%s/10</string>
+    <string name="vote_count">(%s votes)</string>
+    <string name="release_date">Tanggal rilis : %s</string>
+    <string name="summary">Sinopsis</string>
+    <string name="trailers">Trailer</string>
+    <string name="tv_show_title">Judul</string>
+    <string name="not_found">Film tidak ditemukan</string>
+    <string name="text_empty">Isian tidak boleh kosong</string>
+    <string name="title_activity_home">HomeActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Pengaturan</string>
+    <string name="now_playing">Sedang Main</string>
+    <string name="upcoming">Mendatang</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="search_hint">Masukkan judul film di sini</string>
+    <string name="search_results">Hasil Pencarian</string>
+</resources>

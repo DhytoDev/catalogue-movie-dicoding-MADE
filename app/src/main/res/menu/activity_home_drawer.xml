@@ -15,7 +15,7 @@
             tools:ignore="HardcodedText" />
         <item
             android:id="@+id/search"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_search_white_24px"
             android:title="@string/search" />
     </group>
 </menu>

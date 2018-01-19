@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardElevation="@dimen/grid_item_margin"
-    app:cardCornerRadius="@dimen/grid_item_margin"
-    android:padding="@dimen/grid_item_margin"
+    android:layout_marginBottom="@dimen/content_margin_top"
     android:layout_marginLeft="@dimen/content_margin_left"
     android:layout_marginRight="@dimen/content_margin_left"
     android:layout_marginTop="@dimen/content_margin_top"
-    android:layout_marginBottom="@dimen/content_margin_top">
+    android:padding="@dimen/grid_item_margin"
+    app:cardCornerRadius="@dimen/grid_item_margin"
+    app:cardElevation="@dimen/grid_item_margin">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,7 +23,8 @@
             android:layout_width="0dp"
             android:layout_height="175dp"
             android:layout_weight="0.35"
-            android:scaleType="centerCrop" />
+            android:contentDescription="@string/movie_poster"
+            android:scaleType="fitXY" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -33,28 +35,19 @@
 
             <TextView
                 android:id="@+id/tv_movie_title"
-                style="@style/TextAppearance.AppCompat.Title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/title"
-                android:fontFamily="sans-serif"/>
+                style="@style/MovieTextTitle"
+                tools:text="@string/title" />
 
             <TextView
                 android:id="@+id/tv_movie_overview"
-                style="@style/TextAppearance.AppCompat.Small"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/MovieTextSmall"
                 android:maxLines="3"
-                android:text="@string/title"
-                android:fontFamily="sans-serif-light"/>
+                tools:text="@string/title" />
 
             <TextView
                 android:id="@+id/tv_movie_release_date"
-                style="@style/TextAppearance.AppCompat.Small"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/title"
-                android:fontFamily="sans-serif"/>
+                style="@style/MovieTextDate"
+                tools:text="@string/title" />
         </LinearLayout>
 
     </LinearLayout>

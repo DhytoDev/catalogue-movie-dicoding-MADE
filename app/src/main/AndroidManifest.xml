@@ -11,10 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.main.HomeActivity">
+        <activity android:name=".ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <meta-data
@@ -30,7 +29,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dhytodev.cataloguemovie.ui.main.HomeActivity" />
+                android:value="com.dhytodev.cataloguemovie.ui.main.MainActivity" />
             <!-- meta tag and intent filter go into results activity -->
             <meta-data
                 android:name="android.app.searchable"

@@ -4,25 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.dhytodev.cataloguemovie.ui.main.HomeActivity">
+    tools:context="com.dhytodev.cataloguemovie.ui.main.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-       <include layout="@layout/toolbar"/>
+        <include layout="@layout/toolbar" />
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_layout"
-            app:tabGravity="fill"
-            app:tabMode="fixed"
-            android:background="@color/colorPrimary"
-            app:tabIndicatorColor="@android:color/white"
-            app:tabSelectedTextColor="@color/cardview_light_background"
-            app:tabTextColor="@android:color/white"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@android:color/white"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/cardview_light_background"
+            app:tabTextColor="@android:color/white" />
     </android.support.design.widget.AppBarLayout>
 
     <!--<include layout="@layout/content_home" />-->
@@ -30,5 +30,5 @@
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 </android.support.design.widget.CoordinatorLayout>

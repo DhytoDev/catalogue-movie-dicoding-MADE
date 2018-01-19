@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/now_playing"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/now_playing" />
+        <item
+            android:id="@+id/upcoming"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/upcoming"
+            tools:ignore="HardcodedText" />
+        <item
+            android:id="@+id/search"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/search" />
+    </group>
+</menu>

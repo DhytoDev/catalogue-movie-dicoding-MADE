@@ -1,4 +1,4 @@
-package com.dhytodev.cataloguemovie.ui.home;
+package com.dhytodev.cataloguemovie.ui.main.nav_menu;
 
 import com.dhytodev.cataloguemovie.data.model.Movie;
 import com.dhytodev.cataloguemovie.data.network.MovieService;
@@ -19,7 +19,12 @@ public class MainInteractorImpl extends BaseInteractor<MovieService> implements 
     }
 
     @Override
-    public Observable<List<Movie>> fetchSearchMovies(String movieName) {
-        return getService().searchMovies(movieName).flatMap(moviesResponse -> Observable.just(moviesResponse.results));
+    public Observable<List<Movie>> fetchUpComingMovies() {
+        return getService().getUpcomingMovies().flatMap(moviesResponse -> Observable.just(moviesResponse.results));
+    }
+
+    @Override
+    public Observable<List<Movie>> fetchNowPlayingMovies() {
+        return getService().getNowPlayingMovies().flatMap(moviesResponse -> Observable.just(moviesResponse.results));
     }
 }

@@ -26,6 +26,12 @@ public interface MovieService {
     @GET("movie/{id}/videos")
     Observable<TrailerResponse> getMovieTrailers(@Path("id") String movieId);
 
+    @GET("movie/now_playing")
+    Observable<MoviesResponse> getNowPlayingMovies();
+
+    @GET("movie/upcoming")
+    Observable<MoviesResponse> getUpcomingMovies();
+
     class ServiceGenerator {
         public static MovieService instance() {
             final HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();

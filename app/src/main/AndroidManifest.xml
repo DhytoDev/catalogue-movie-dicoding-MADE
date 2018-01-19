@@ -17,12 +17,28 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".ui.main.nav_menu.search.SearchResultsActivity" />
         </activity>
         <activity android:name=".ui.detail.DetailActivity" />
         <activity
-            android:name=".ui.home.MainActivity"
+            android:name=".ui.main.nav_menu.search.SearchResultsActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.dhytodev.cataloguemovie.ui.main.HomeActivity" />
+            <!-- meta tag and intent filter go into results activity -->
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

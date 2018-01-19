@@ -1,11 +1,11 @@
-package com.dhytodev.cataloguemovie.ui.main.nowplaying;
+package com.dhytodev.cataloguemovie.ui.main.nav_menu.nowplaying;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
-import com.dhytodev.cataloguemovie.ui.main.MainFragment;
+import com.dhytodev.cataloguemovie.ui.main.nav_menu.MainFragment;
 
 /**
  * Created by izadalab on 19/01/18.

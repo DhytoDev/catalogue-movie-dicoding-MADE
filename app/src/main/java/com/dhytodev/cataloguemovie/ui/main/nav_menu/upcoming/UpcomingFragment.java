@@ -1,16 +1,13 @@
-package com.dhytodev.cataloguemovie.ui.main.upcoming;
+package com.dhytodev.cataloguemovie.ui.main.nav_menu.upcoming;
 
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
-import com.dhytodev.cataloguemovie.R;
-import com.dhytodev.cataloguemovie.ui.main.MainFragment;
+import com.dhytodev.cataloguemovie.ui.main.nav_menu.MainFragment;
 
 /**
  * A simple {@link Fragment} subclass.

@@ -1,4 +1,4 @@
-package com.dhytodev.cataloguemovie.ui.main;
+package com.dhytodev.cataloguemovie.ui.main.nav_menu;
 
 import com.dhytodev.cataloguemovie.data.model.Movie;
 import com.dhytodev.mybasemvp.MvpView;

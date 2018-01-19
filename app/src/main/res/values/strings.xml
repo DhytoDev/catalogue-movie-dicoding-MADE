@@ -11,8 +11,8 @@
     <string name="summary">Summary</string>
     <string name="trailers">Trailers</string>
     <string name="tv_show_title">Title</string>
-    <string name="not_found">Film tidak ditemukan</string>
-    <string name="text_empty">Field tidak boleh kosong</string>
+    <string name="not_found">Movie not found</string>
+    <string name="text_empty">Field can not be empty</string>
     <string name="title_activity_home">HomeActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -23,5 +23,6 @@
     <string name="upcoming">Upcoming</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search_hint">Put movie title here</string>
+    <string name="search_results">Search Results</string>
 </resources>

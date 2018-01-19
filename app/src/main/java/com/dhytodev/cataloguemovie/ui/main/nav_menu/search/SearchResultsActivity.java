@@ -1,15 +1,13 @@
-package com.dhytodev.cataloguemovie.ui.home;
+package com.dhytodev.cataloguemovie.ui.main.nav_menu.search;
 
+import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -18,11 +16,7 @@ import com.dhytodev.cataloguemovie.R;
 import com.dhytodev.cataloguemovie.data.model.Movie;
 import com.dhytodev.cataloguemovie.data.network.MovieService;
 import com.dhytodev.cataloguemovie.ui.detail.DetailActivity;
-import com.dhytodev.cataloguemovie.ui.main.MainInteractor;
-import com.dhytodev.cataloguemovie.ui.main.MainInteractorImpl;
-import com.dhytodev.cataloguemovie.ui.main.MainPresenter;
-import com.dhytodev.cataloguemovie.ui.main.MainView;
-import com.dhytodev.cataloguemovie.ui.main.MovieViewHolder;
+import com.dhytodev.cataloguemovie.ui.main.nav_menu.MovieViewHolder;
 import com.dhytodev.mybasemvp.BaseActivity;
 import com.dhytodev.mybasemvp.BaseRvAdapter;
 import com.dhytodev.mybasemvp.listener.RecyclerViewItemClickListener;
@@ -34,14 +28,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class MainActivity extends BaseActivity implements MainView, RecyclerViewItemClickListener {
+public class SearchResultsActivity extends BaseActivity implements RecyclerViewItemClickListener, SearchView {
 
     @BindView(R.id.rv_movies)
     RecyclerView rvMovies;
-    @BindView(R.id.edt_search_movie)
-    EditText etSearchMovie;
-    @BindView(R.id.btn_search)
-    Button btnSearch;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.loading_progress)
@@ -51,8 +41,8 @@ public class MainActivity extends BaseActivity implements MainView, RecyclerView
     @BindView(R.id.status_layout)
     LinearLayout statusLayout;
 
-    private MainInteractor mainInteractor;
-    private MainPresenter<MainView, MainInteractor> mainPresenter;
+    private SearchInteractor interactor;
+    private SearchPresenter presenter;
 
     private List<Movie> movies = new ArrayList<>();
     private BaseRvAdapter<Movie, MovieViewHolder> adapter;
@@ -64,39 +54,33 @@ public class MainActivity extends BaseActivity implements MainView, RecyclerView
         setUnbinder(ButterKnife.bind(this));
         setUp();
 
-        mainPresenter.onAttach(this);
+        presenter.onAttach(this);
 
-        btnSearch.setOnClickListener(view -> {
-            String query = etSearchMovie.getText().toString();
-
-            if (TextUtils.isEmpty(query)) {
-                etSearchMovie.setError(getString(R.string.text_empty));
-            } else {
-                mainPresenter.getSearchMovies(etSearchMovie.getText().toString());
-            }
-
-        });
-
+        if (Intent.ACTION_SEARCH.equals(getIntent().getAction())) {
+            String query = getIntent().getStringExtra(SearchManager.QUERY);
+            presenter.getSearchMovies(query);
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mainPresenter.onDetach();
+        presenter.onDetach();
     }
+
 
     @Override
     protected void setUp() {
 
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-            getSupportActionBar().setTitle(getString(R.string.app_name));
-        } else {
-            Log.e("toolbar", "toolbar is null !");
+            getSupportActionBar().setTitle(getString(R.string.search_results));
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        mainInteractor = new MainInteractorImpl(MovieService.ServiceGenerator.instance());
-        mainPresenter = new MainPresenter<>(mainInteractor, new CompositeDisposable());
+        interactor = new SearchInteractorImpl(MovieService.ServiceGenerator.instance());
+        presenter = new SearchPresenter(interactor, new CompositeDisposable());
+
 
         rvMovies.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -105,7 +89,7 @@ public class MainActivity extends BaseActivity implements MainView, RecyclerView
         adapter = new BaseRvAdapter<Movie, MovieViewHolder>(R.layout.movie_item, MovieViewHolder.class, movies, this) {
             @Override
             protected void bindView(MovieViewHolder holder, Movie movie, int position) {
-                holder.bind(movie, MainActivity.this);
+                holder.bind(movie, SearchResultsActivity.this);
             }
         };
 
@@ -133,7 +117,7 @@ public class MainActivity extends BaseActivity implements MainView, RecyclerView
         adapter.notifyDataSetChanged();
     }
 
-   /* @Override
+    @Override
     public void showStatus(boolean isDataFound) {
         if (isDataFound) {
             statusLayout.setVisibility(View.GONE);
@@ -143,7 +127,7 @@ public class MainActivity extends BaseActivity implements MainView, RecyclerView
             tvStatus.setText(getString(R.string.not_found));
             rvMovies.setVisibility(View.GONE);
         }
-    }*/
+    }
 
 
     @Override
@@ -152,5 +136,11 @@ public class MainActivity extends BaseActivity implements MainView, RecyclerView
         Intent intent = new Intent(this, DetailActivity.class);
         intent.putExtra(DetailActivity.MOVIE_INTENT, movie);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return super.onSupportNavigateUp();
     }
 }

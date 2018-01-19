@@ -1,4 +1,4 @@
-package com.dhytodev.cataloguemovie.ui.main;
+package com.dhytodev.cataloguemovie.ui.main.nav_menu;
 
 import android.util.Log;
 
@@ -20,28 +20,6 @@ public class MainPresenter<V extends MainView, I extends MainInteractor> extends
 
     public MainPresenter(I mvpInteractor, CompositeDisposable compositeDisposable) {
         super(mvpInteractor, compositeDisposable);
-    }
-
-    public void getSearchMovies(String movieName) {
-        getMvpView().showLoading(true);
-
-        getCompositeDisposable()
-                .add(getInteractor().fetchSearchMovies(movieName)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(movies -> {
-                            getMvpView().showLoading(false);
-
-                            if (movies != null && movies.size() > 0) {
-                                getMvpView().displayMovies(movies);
-                                getMvpView().showStatus(true);
-                            } else {
-                                getMvpView().showStatus(false);
-                            }
-                        }, throwable -> {
-                            getMvpView().showLoading(false);
-                            getMvpView().onError(throwable.getLocalizedMessage());
-                        }));
     }
 
     public void fetchMovies(int movie) {

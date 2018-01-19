@@ -1,4 +1,4 @@
-package com.dhytodev.cataloguemovie.ui.main;
+package com.dhytodev.cataloguemovie.ui.main.nav_menu;
 
 import android.content.Intent;
 import android.os.Bundle;

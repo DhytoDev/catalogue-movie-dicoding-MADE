@@ -4,8 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.dhytodev.cataloguemovie.ui.main.nowplaying.NowPlayingFragment;
-import com.dhytodev.cataloguemovie.ui.main.upcoming.UpcomingFragment;
+import com.dhytodev.cataloguemovie.ui.main.nav_menu.nowplaying.NowPlayingFragment;
+import com.dhytodev.cataloguemovie.ui.main.nav_menu.upcoming.UpcomingFragment;
 
 
 /**

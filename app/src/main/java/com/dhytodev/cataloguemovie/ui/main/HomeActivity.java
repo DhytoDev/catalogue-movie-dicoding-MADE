@@ -1,17 +1,23 @@
 package com.dhytodev.cataloguemovie.ui.main;
 
+import android.app.SearchManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.dhytodev.cataloguemovie.R;
+import com.dhytodev.cataloguemovie.ui.main.nav_menu.search.SearchResultsActivity;
 import com.dhytodev.mybasemvp.BaseActivity;
 
 import butterknife.BindView;
@@ -30,6 +36,8 @@ public class HomeActivity extends BaseActivity
     TabLayout tabLayout;
     @BindView(R.id.viewpager)
     ViewPager viewPager;
+
+    private SearchView searchView ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +79,11 @@ public class HomeActivity extends BaseActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
+
+        searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.search));
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, SearchResultsActivity.class)));
+        searchView.setQueryHint(getResources().getString(R.string.search_hint));
         return true;
     }
 
@@ -82,9 +95,7 @@ public class HomeActivity extends BaseActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -96,19 +107,16 @@ public class HomeActivity extends BaseActivity
         int id = item.getItemId();
         drawer.closeDrawer(GravityCompat.START);
 
-     /*   switch (id) {
-            case R.id.now_playing:
-                viewPager.setCurrentItem(0);
-            case R.id.upcoming:
-                viewPager.setCurrentItem(1);
-        }*/
-
         if (id == R.id.now_playing) {
             viewPager.setCurrentItem(0);
         }
 
         if (id == R.id.upcoming) {
             viewPager.setCurrentItem(1);
+        }
+
+        if (id == R.id.search) {
+            searchView.setIconified(false);
         }
         return true;
     }

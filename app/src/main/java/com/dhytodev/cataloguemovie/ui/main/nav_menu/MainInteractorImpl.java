@@ -1,8 +1,7 @@
-package com.dhytodev.cataloguemovie.ui.main;
+package com.dhytodev.cataloguemovie.ui.main.nav_menu;
 
 import com.dhytodev.cataloguemovie.data.model.Movie;
 import com.dhytodev.cataloguemovie.data.network.MovieService;
-import com.dhytodev.cataloguemovie.ui.main.MainInteractor;
 import com.dhytodev.mybasemvp.BaseInteractor;
 
 import java.util.List;
@@ -17,11 +16,6 @@ public class MainInteractorImpl extends BaseInteractor<MovieService> implements 
 
     public MainInteractorImpl(MovieService service) {
         super(service);
-    }
-
-    @Override
-    public Observable<List<Movie>> fetchSearchMovies(String movieName) {
-        return getService().searchMovies(movieName).flatMap(moviesResponse -> Observable.just(moviesResponse.results));
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.dhytodev.cataloguemovie.ui.main.nav_menu;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -41,6 +42,6 @@ public class MovieViewHolder extends RecyclerView.ViewHolder  {
                 .into(moviePoster);
         movieTitle.setText(movie.getTitle());
         movieOverview.setText(movie.getOverview());
-        movieReleaseDate.setText(movie.getReleaseDate());
+        movieReleaseDate.setText(String.format(context.getString(R.string.release_date), movie.getReleaseDate()));
     }
 }

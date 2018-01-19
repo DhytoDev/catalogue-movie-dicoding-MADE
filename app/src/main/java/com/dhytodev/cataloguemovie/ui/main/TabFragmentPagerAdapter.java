@@ -17,7 +17,7 @@ public class TabFragmentPagerAdapter extends FragmentPagerAdapter {
 
     private Context context ;
 
-    String[] title ;
+    private String[] title ;
 
     public TabFragmentPagerAdapter(FragmentManager fm, Context context) {
         super(fm);

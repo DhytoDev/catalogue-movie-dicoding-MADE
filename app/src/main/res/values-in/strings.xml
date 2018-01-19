@@ -2,8 +2,8 @@
     <string name="app_name">Katalog Film</string>
     <string name="search">Cari</string>
     <string name="title">Captain America</string>
-    <string name="movie_backdrop">TV Shows Backdrop</string>
-    <string name="movie_poster">Tv Show Poster</string>
+    <string name="movie_backdrop">Backdrop Film</string>
+    <string name="movie_poster">Poster Film</string>
 
     <string name="rating">%s/10</string>
     <string name="vote_count">(%s votes)</string>
@@ -19,8 +19,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Pengaturan</string>
-    <string name="now_playing">Sedang Main</string>
-    <string name="upcoming">Mendatang</string>
+    <string name="now_playing">Sedang Tayang</string>
+    <string name="upcoming">Akan Tayang</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="search_hint">Masukkan judul film di sini</string>

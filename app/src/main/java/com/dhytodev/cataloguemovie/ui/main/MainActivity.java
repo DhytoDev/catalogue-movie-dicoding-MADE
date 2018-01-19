@@ -68,6 +68,8 @@ public class MainActivity extends BaseActivity
         viewPager.setCurrentItem(0);
     }
 
+
+
     @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {

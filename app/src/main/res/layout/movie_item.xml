@@ -33,9 +33,10 @@
             android:orientation="vertical"
             android:padding="@dimen/content_margin_top">
 
-            <TextView
+            <me.grantland.widget.AutofitTextView
                 android:id="@+id/tv_movie_title"
                 style="@style/MovieTextTitle"
+                android:maxLines="2"
                 tools:text="@string/title" />
 
             <TextView
@@ -44,9 +45,11 @@
                 android:maxLines="3"
                 tools:text="@string/title" />
 
-            <TextView
+            <me.grantland.widget.AutofitTextView
                 android:id="@+id/tv_movie_release_date"
                 style="@style/MovieTextDate"
+                android:layout_marginTop="@dimen/content_margin_top"
+                android:maxLines="1"
                 tools:text="@string/title" />
         </LinearLayout>
 

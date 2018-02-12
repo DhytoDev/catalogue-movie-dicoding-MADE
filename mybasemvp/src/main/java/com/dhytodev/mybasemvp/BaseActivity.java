@@ -18,7 +18,7 @@ import butterknife.Unbinder;
 
 public abstract class BaseActivity extends AppCompatActivity implements MvpView {
 
-    private static final String TAG = BaseActivity.class.getSimpleName() ;
+    public static final String TAG = BaseActivity.class.getSimpleName() ;
 
     private Unbinder unbinder;
 

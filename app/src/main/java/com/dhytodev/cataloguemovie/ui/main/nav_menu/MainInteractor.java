@@ -17,5 +17,6 @@ public interface MainInteractor extends MvpInteractor<MovieService> {
 
     Observable<List<Movie>> fetchUpComingMovies();
     Observable<List<Movie>> fetchNowPlayingMovies();
+    Observable<List<Movie>> fetchFavoriteMovies();
 
 }

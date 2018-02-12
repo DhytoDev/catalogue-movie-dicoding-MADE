@@ -68,8 +68,6 @@ public class MainActivity extends BaseActivity
         viewPager.setCurrentItem(0);
     }
 
-
-
     @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -117,6 +115,10 @@ public class MainActivity extends BaseActivity
 
         if (id == R.id.upcoming) {
             viewPager.setCurrentItem(1);
+        }
+
+        if (id == R.id.favorite) {
+            viewPager.setCurrentItem(2);
         }
 
         if (id == R.id.search) {

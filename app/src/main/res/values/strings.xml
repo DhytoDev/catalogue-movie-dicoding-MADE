@@ -26,4 +26,7 @@
     <string name="search_hint">Put movie title here</string>
     <string name="search_results">Search Results</string>
     <string name="email">dhytodev@gmail.com</string>
+    <string name="favorite">Favorite</string>
+    <string name="movie_added_to_favorite">Movie added to favorite list</string>
+    <string name="movie_removed_from_favorite">Movie deleted from favorite list</string>
 </resources>

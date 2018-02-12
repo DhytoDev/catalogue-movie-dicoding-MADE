@@ -1,6 +1,5 @@
 package com.dhytodev.cataloguemovie.ui.main.nav_menu;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

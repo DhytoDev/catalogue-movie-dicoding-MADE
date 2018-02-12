@@ -6,10 +6,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.HorizontalScrollView;
@@ -34,6 +36,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.reactivex.disposables.CompositeDisposable;
 
 public class DetailActivity extends BaseActivity implements DetailView, View.OnClickListener {
@@ -74,9 +77,14 @@ public class DetailActivity extends BaseActivity implements DetailView, View.OnC
     ProgressBar loadingProgress;
     @BindView(R.id.movie_summary)
     TextView movieSummary;
+    @BindView(R.id.movie_rating_layout)
+    LinearLayout movieRatingLayout;
+    @BindView(R.id.fab_favorite)
+    FloatingActionButton fabFavorite;
 
-    DetailInteractor detailInteractor;
-    DetailPresenter detailPresenter;
+    private DetailPresenter presenter;
+    private boolean isMovieFavorite = false ;
+    private Movie movie ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,25 +94,27 @@ public class DetailActivity extends BaseActivity implements DetailView, View.OnC
         setUp();
 
         if (savedInstanceState == null) {
-            Movie movie = getIntent().getParcelableExtra(MOVIE_INTENT);
+            movie = getIntent().getParcelableExtra(MOVIE_INTENT);
             if (movie != null) {
                 displayDetails(movie);
-                detailPresenter.onAttach(this);
-                detailPresenter.fetchTrailers(String.valueOf(movie.getId()));
+                presenter.onAttach(this);
+                presenter.fetchTrailers(String.valueOf(movie.getId()));
+                presenter.isMovieFavorited(movie);
+                Log.e(TAG, "onCreate: " + String.valueOf(movie.getId()));
             }
         }
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        detailPresenter.onDetach();
+    protected void onStop() {
+        super.onStop();
+        presenter.onDetach();
     }
 
     @Override
     protected void setUp() {
-        detailInteractor = new DetailInteractorImpl(MovieService.ServiceGenerator.instance());
-        detailPresenter = new DetailPresenter(detailInteractor, new CompositeDisposable());
+        final DetailInteractor interactor = new DetailInteractorImpl(MovieService.ServiceGenerator.instance(), this);
+        presenter = new DetailPresenter(interactor, new CompositeDisposable());
 
         collapsingToolbar.setContentScrimColor(ContextCompat.getColor(this, R.color.colorPrimary));
         collapsingToolbar.setCollapsedTitleTextAppearance(R.style.CollapsedToolbar);
@@ -114,8 +124,6 @@ public class DetailActivity extends BaseActivity implements DetailView, View.OnC
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        } else {
-
         }
     }
 
@@ -186,6 +194,17 @@ public class DetailActivity extends BaseActivity implements DetailView, View.OnC
     }
 
     @Override
+    public void setFavoriteFabIcon(boolean isFavorited) {
+        if (isFavorited) {
+            fabFavorite.setImageResource(R.drawable.ic_star_white_24dp);
+            isMovieFavorite = true;
+        } else {
+            fabFavorite.setImageResource(R.drawable.ic_star_border_white_24dp);
+            isMovieFavorite = false ;
+        }
+    }
+
+    @Override
     public void onClick(View view) {
         String key = view.getTag().toString();
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=" + key)));
@@ -195,5 +214,16 @@ public class DetailActivity extends BaseActivity implements DetailView, View.OnC
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return super.onSupportNavigateUp();
+    }
+
+    @OnClick(R.id.fab_favorite)
+    void onFabClick(){
+        if (isMovieFavorite) {
+            presenter.deleteMovieFromFavoriteList(movie);
+        } else {
+            presenter.addMovieToFavoriteList(movie);
+        }
+
+        presenter.isMovieFavorited(movie);
     }
 }

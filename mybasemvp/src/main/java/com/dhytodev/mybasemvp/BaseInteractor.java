@@ -13,6 +13,8 @@ public class BaseInteractor<T> implements MvpInteractor<T> {
         this.service = service;
     }
 
+    public BaseInteractor() {}
+
     @Override
     public T getService() {
         return service;

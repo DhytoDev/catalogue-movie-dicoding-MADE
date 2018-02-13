@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">My Fav</string>
+    <string name="movie_poster">Movie Poster</string>
+    <string name="title">Movie Title</string>
+    <string name="release_date">Release date : %s</string>
+</resources>

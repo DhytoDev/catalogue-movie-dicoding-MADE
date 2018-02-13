@@ -1,0 +1,58 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+
+    defaultConfig {
+        applicationId "com.izadalab.myfav"
+        minSdkVersion 16
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        File secretsExists = new File("secret.properties")
+        if (secretsExists.exists()) {
+            def secretsFile = rootProject.file('secret.properties')
+            def secrets = new Properties()
+            secrets.load(new FileInputStream(secretsFile))
+            buildConfigField "String", "TMDB_API_KEY", secrets.getProperty('API_KEY')
+            buildConfigField "String", "TMDB_BASE_URL", secrets.getProperty('BASE_URL')
+            buildConfigField "String", "API_POSTER_PATH", secrets.getProperty('API_POSTER_PATH')
+            buildConfigField "String", "API_BACKDROP_PATH", secrets.getProperty('API_BACKDROP_PATH')
+        }
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation project(':mybasemvp')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:support-v4:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:design:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:palette-v7:$rootProject.supportLibraryVersion"
+    implementation "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxJava2Version"
+    implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
+    implementation 'me.grantland:autofittextview:0.2.+'
+}

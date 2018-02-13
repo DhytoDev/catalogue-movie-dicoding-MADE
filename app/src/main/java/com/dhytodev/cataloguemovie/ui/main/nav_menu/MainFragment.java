@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.CompositeDisposable;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by izadalab on 19/01/18.
@@ -57,7 +60,7 @@ public class MainFragment extends BaseFragment implements MainView, RecyclerView
 
     @Override
     protected void setUp(View view) {
-        MainInteractor interactor = new MainInteractorImpl(MovieService.ServiceGenerator.instance());
+        final MainInteractor interactor = new MainInteractorImpl(MovieService.ServiceGenerator.instance(), getContext());
         presenter = new MainPresenter<>(interactor, new CompositeDisposable());
         presenter.onAttach(this);
 

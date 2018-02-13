@@ -13,4 +13,5 @@ import java.util.List;
 
 public interface DetailView extends MvpView {
     void displayTrailers(List<Trailer> trailers);
+    void setFavoriteFabIcon(boolean isFavorited);
 }

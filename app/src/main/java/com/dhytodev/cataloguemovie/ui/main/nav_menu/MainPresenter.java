@@ -29,8 +29,10 @@ public class MainPresenter<V extends MainView, I extends MainInteractor> extends
 
         if (movie == 0) {
             observableMovies = getInteractor().fetchNowPlayingMovies();
-        } else {
+        } else if (movie == 1) {
             observableMovies = getInteractor().fetchUpComingMovies();
+        } else {
+            observableMovies = getInteractor().fetchFavoriteMovies();
         }
 
         getCompositeDisposable().add(observableMovies.
@@ -38,13 +40,11 @@ public class MainPresenter<V extends MainView, I extends MainInteractor> extends
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(movies -> {
                     getMvpView().showLoading(false);
-                    if (movies != null && movies.size() > 0) {
-                        getMvpView().displayMovies(movies);
-                        Log.e("movies", movies.get(0).getPosterPath());
-                    }
+                    getMvpView().displayMovies(movies);
                 }, throwable -> {
                     getMvpView().showLoading(false);
                     getMvpView().onError(throwable.getLocalizedMessage());
+                    Log.e("error", throwable.getLocalizedMessage());
                     //getMvpView().onError("hello");
                 }));
     }

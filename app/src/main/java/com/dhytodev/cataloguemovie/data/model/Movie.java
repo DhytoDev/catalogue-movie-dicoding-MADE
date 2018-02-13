@@ -1,9 +1,13 @@
 package com.dhytodev.cataloguemovie.data.model;
 
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.dhytodev.cataloguemovie.data.local.DatabaseMovieContract;
 import com.google.gson.annotations.SerializedName;
+
+import static com.dhytodev.cataloguemovie.data.local.DatabaseMovieContract.MovieColumns.*;
 
 /**
  * Created by izadalab on 7/8/17.
@@ -145,4 +149,16 @@ public class Movie implements Parcelable {
             return new Movie[size];
         }
     };
+
+    public Movie(Cursor cursor) {
+        this.id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_MOVIE_ID));
+        this.title = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_MOVIE_TITLE));
+        this.popularity = cursor.getFloat(cursor.getColumnIndexOrThrow(COLUMN_MOVIE_POPULARITY));
+        this.posterPath = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_MOVIE_POSTER_PATH));
+        this.backdropPath = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_MOVIE_BACKDROP_PATH));
+        this.overview = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_MOVIE_OVERVIEW));
+        this.releaseDate = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_MOVIE_RELEASE_DATE));
+        this.voteCount = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_MOVIE_VOTE_COUNT));
+        this.voteAverage = cursor.getFloat(cursor.getColumnIndexOrThrow(COLUMN_MOVIE_VOTE_AVERAGE));
+    }
 }

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/content_margin_top"
+    android:layout_marginLeft="@dimen/content_margin_left"
+    android:layout_marginRight="@dimen/content_margin_left"
+    android:layout_marginTop="@dimen/content_margin_top"
+    android:padding="@dimen/grid_item_margin"
+    app:cardCornerRadius="@dimen/grid_item_margin"
+    app:cardElevation="@dimen/grid_item_margin">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_movie_poster"
+            android:layout_width="0dp"
+            android:layout_height="175dp"
+            android:layout_weight="0.35"
+            android:contentDescription="@string/movie_poster"
+            android:scaleType="fitXY" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.65"
+            android:orientation="vertical"
+            android:padding="@dimen/content_margin_top">
+
+            <me.grantland.widget.AutofitTextView
+                android:id="@+id/tv_movie_title"
+                style="@style/MovieTextTitle"
+                android:maxLines="2"
+                tools:text="@string/title" />
+
+            <TextView
+                android:id="@+id/tv_movie_overview"
+                style="@style/MovieTextSmall"
+                android:maxLines="3"
+                tools:text="@string/title" />
+
+            <me.grantland.widget.AutofitTextView
+                android:id="@+id/tv_movie_release_date"
+                style="@style/MovieTextDate"
+                android:layout_marginTop="@dimen/content_margin_top"
+                android:maxLines="1"
+                tools:text="@string/title" />
+        </LinearLayout>
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

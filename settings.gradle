@@ -1,1 +1,1 @@
-include ':app', ':mybasemvp'
+include ':app', ':mybasemvp', ':myfav'

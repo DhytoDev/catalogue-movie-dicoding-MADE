@@ -27,4 +27,5 @@
     <string name="search_results">Hasil Pencarian</string>
     <string name="movie_added_to_favorite">Film ditambahkan ke daftar favorit</string>
     <string name="movie_removed_from_favorite">Film dihapus dari daftar favorit</string>
+    <string name="empty_widget_view_text">No Movies Added</string>
 </resources>

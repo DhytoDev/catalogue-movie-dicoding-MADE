@@ -54,7 +54,8 @@ public class MainActivity extends BaseActivity
         setSupportActionBar(toolbar);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -84,7 +85,7 @@ public class MainActivity extends BaseActivity
 
         searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.search));
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, SearchResultsActivity.class)));
+        searchView.setSearchableInfo(searchManager != null ? searchManager.getSearchableInfo(new ComponentName(this, SearchResultsActivity.class)) : null);
         searchView.setQueryHint(getResources().getString(R.string.search_hint));
         return true;
     }

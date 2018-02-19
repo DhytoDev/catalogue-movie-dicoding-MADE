@@ -29,4 +29,7 @@
     <string name="favorite">Favorite</string>
     <string name="movie_added_to_favorite">Movie added to favorite list</string>
     <string name="movie_removed_from_favorite">Movie deleted from favorite list</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="empty_widget_view_text">No Movies Added</string>
 </resources>

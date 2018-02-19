@@ -3,8 +3,14 @@
     package="com.dhytodev.cataloguemovie">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <permission android:name="com.dhytodev.cataloguemovie.READ_DATABASE" android:protectionLevel="normal" />
-    <permission android:name="com.dhytodev.cataloguemovie.WRITE_DATABASE" android:protectionLevel="normal" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <permission
+        android:name="com.dhytodev.cataloguemovie.READ_DATABASE"
+        android:protectionLevel="normal" />
+    <permission
+        android:name="com.dhytodev.cataloguemovie.WRITE_DATABASE"
+        android:protectionLevel="normal" />
 
     <application
         android:icon="@mipmap/ic_launcher"
@@ -15,8 +21,10 @@
         <activity android:name=".ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".ui.main.nav_menu.search.SearchResultsActivity" />
@@ -35,17 +43,30 @@
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
+
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
 
         <provider
-            android:authorities="com.dhytodev.cataloguemovie"
             android:name=".data.local.DatabaseMovieProvider"
+            android:authorities="com.dhytodev.cataloguemovie"
             android:exported="true"
             android:readPermission="com.dhytodev.cataloguemovie.READ_DATABASE"
-            android:writePermission="com.dhytodev.cataloguemovie.WRITE_DATABASE"/>
+            android:writePermission="com.dhytodev.cataloguemovie.WRITE_DATABASE" />
+
+        <receiver android:name=".ui.widget.FavoriteWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/favorite_widget_info" />
+        </receiver>
+        <service android:name=".data.service.StackWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
     </application>
 
 </manifest>

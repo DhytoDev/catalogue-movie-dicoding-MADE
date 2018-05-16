@@ -3,7 +3,7 @@
     package="com.dhytodev.cataloguemovie">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <permission
         android:name="com.dhytodev.cataloguemovie.READ_DATABASE"
@@ -48,6 +48,7 @@
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.settings.SettingsActivity" />
 
         <provider
             android:name=".data.local.DatabaseMovieProvider"
@@ -65,8 +66,15 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/favorite_widget_info" />
         </receiver>
-        <service android:name=".data.service.StackWidgetService"
-            android:permission="android.permission.BIND_REMOTEVIEWS"/>
+
+        <receiver android:name=".data.service.reminder.DailyAlarmReceiver"
+            android:enabled="true"
+            android:exported="true"/>
+
+        <service
+            android:name=".data.service.StackWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
     </application>
 
 </manifest>

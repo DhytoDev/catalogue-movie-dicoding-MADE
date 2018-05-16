@@ -23,19 +23,32 @@ stages:
     ANDROID_SDK_TOOLS: "26.1.1"
 
   before_script:
-    - apt-get --quiet update --yes
-    - apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
-    - wget --quiet --output-document=android-sdk.tgz https://dl.google.com/android/android-sdk_r${ANDROID_SDK_TOOLS}-linux.tgz
-    - tar --extract --gzip --file=android-sdk.tgz
-    - echo y | android-sdk-linux/tools/android --silent update sdk --no-ui --all --filter android-${ANDROID_COMPILE_SDK}
-    - echo y | android-sdk-linux/tools/android --silent update sdk --no-ui --all --filter platform-tools
-    - echo y | android-sdk-linux/tools/android --silent update sdk --no-ui --all --filter build-tools-${ANDROID_BUILD_TOOLS}
-    - echo y | android-sdk-linux/tools/android --silent update sdk --no-ui --all --filter extra-android-m2repository
-    - echo y | android-sdk-linux/tools/android --silent update sdk --no-ui --all --filter extra-google-google_play_services
-    - echo y | android-sdk-linux/tools/android --silent update sdk --no-ui --all --filter extra-google-m2repository
-    - export ANDROID_HOME=$PWD/android-sdk-linux
-    - export PATH=$PATH:$PWD/android-sdk-linux/platform-tools/
-    - chmod +x ./gradlew
+    before_script:
+      - apt-get --quiet update --yes
+      - apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
+      - export ANDROID_SDK_HOME=$PWD/__ci
+      - export ANDROID_HOME=$ANDROID_SDK_HOME/android-sdk-linux
+      - export GRADLE_USER_HOME=$ANDROID_SDK_HOME
+      - mkdir -p $ANDROID_HOME
+      - wget --quiet --output-document=$ANDROID_SDK_HOME/android-sdk-tools.zip https://dl.google.com/android/repository/tools_r${ANDROID_SDK_TOOLS}-linux.zip
+      - unzip $ANDROID_SDK_HOME/android-sdk-tools.zip -d $ANDROID_HOME
+      - echo y | $ANDROID_HOME/tools/android --silent update sdk --no-ui --all --filter android-${ANDROID_COMPILE_SDK}
+      - echo y | $ANDROID_HOME/tools/android --silent update sdk --no-ui --all --filter platform-tools
+      - echo y | $ANDROID_HOME/tools/android --silent update sdk --no-ui --all --filter build-tools-${ANDROID_BUILD_TOOLS}
+      - echo y | $ANDROID_HOME/tools/android --silent update sdk --no-ui --all --filter extra-android-m2repository
+      - echo y | $ANDROID_HOME/tools/android --silent update sdk --no-ui --all --filter extra-google-google_play_services
+      - echo y | $ANDROID_HOME/tools/android --silent update sdk --no-ui --all --filter extra-google-m2repository
+      - export PATH=$PATH:$ANDROID_HOME/platform-tools/
+      - export LD_LIBRARY_PATH=${ANDROID_HOME}/tools/lib64
+      - chmod +x ./gradlew
+      # configure system gradle
+      - mkdir -p $GRADLE_USER_HOME/.gradle/
+      - echo "org.gradle.jvmargs=-Xmx2048M" > $GRADLE_USER_HOME/.gradle/gradle.properties
+      # auto accept licenses
+      - mkdir "$ANDROID_HOME/licenses" || true
+      - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
+      - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
+
 
 build_debug:
   <<: *build_template_def

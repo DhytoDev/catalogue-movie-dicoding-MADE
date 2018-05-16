@@ -109,7 +109,7 @@ package_release:
   stage: package
   environment: Release
   only:
-    - /.0.0/
+    - master
   script:
     - mv app/build/outputs/apk/app-release.apk ./deliverables/NameOfTheApp-v$VERSION_NAME-$VERSION_CODE-release.apk
   artifacts:

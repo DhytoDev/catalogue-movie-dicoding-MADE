@@ -79,6 +79,12 @@ public class MainFragment extends BaseFragment implements MainView, RecyclerView
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        presenter.onDetach();
+    }
+
+    @Override
     public void showLoading(boolean isShowLoading) {
         tvError.setVisibility(View.GONE);
         if (isShowLoading) {

@@ -20,6 +20,7 @@ import android.view.MenuItem;
 
 import com.dhytodev.cataloguemovie.R;
 import com.dhytodev.cataloguemovie.ui.main.nav_menu.search.SearchResultsActivity;
+import com.dhytodev.cataloguemovie.ui.settings.SettingsActivity;
 import com.dhytodev.mybasemvp.BaseActivity;
 
 import butterknife.BindView;
@@ -54,7 +55,8 @@ public class MainActivity extends BaseActivity
         setSupportActionBar(toolbar);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -84,7 +86,7 @@ public class MainActivity extends BaseActivity
 
         searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.search));
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, SearchResultsActivity.class)));
+        searchView.setSearchableInfo(searchManager != null ? searchManager.getSearchableInfo(new ComponentName(this, SearchResultsActivity.class)) : null);
         searchView.setQueryHint(getResources().getString(R.string.search_hint));
         return true;
     }
@@ -95,7 +97,7 @@ public class MainActivity extends BaseActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         if (item.getItemId() == R.id.settings) {
-            Intent intent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
+            Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
         }
 

@@ -1,0 +1,44 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="10">
+
+        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/banner_text"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+            android:text="@string/favorite"
+            android:textAlignment="center"
+            android:textColor="@android:color/white" />
+
+        <StackView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/stack_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="9"
+            android:loopViews="true"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@color/colorAccent"
+        android:text="@string/empty_widget_view_text"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        style="@style/TextAppearance.AppCompat.Title"
+        android:visibility="gone" />
+
+</FrameLayout>

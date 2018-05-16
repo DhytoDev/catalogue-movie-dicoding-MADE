@@ -27,4 +27,13 @@
     <string name="search_results">Hasil Pencarian</string>
     <string name="movie_added_to_favorite">Film ditambahkan ke daftar favorit</string>
     <string name="movie_removed_from_favorite">Film dihapus dari daftar favorit</string>
+    <string name="empty_widget_view_text">No Movies Added</string>
+    <string name="action_notification">Notifications</string>
+    <string name="label_daily_reminder_summary">Turn on/off daily reminder</string>
+    <string name="label_daily_reminder_title">Daily Reminder</string>
+    <string name="label_upcoming_reminder_summary">Turn on/off upcoming reminder</string>
+    <string name="label_upcoming_reminder_title">Upcoming Reminder</string>
+    <string name="label_setting_locale_summary">Setting Locale</string>
+    <string name="label_setting_locale_title">Change your phone localization</string>
+    <string name="msg_daily_reminder">Hai, aplikasi film sedang menunggumu!</string>
 </resources>

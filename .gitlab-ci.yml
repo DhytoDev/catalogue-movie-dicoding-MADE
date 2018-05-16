@@ -1,130 +1,43 @@
-image: openjdk:8-jdk
+image: pratamawijaya/gitlab-ci-android
 
 stages:
-  - build
-  - test
-  - package
+- check
+- build
+- deploy
+
+before_script:
+  - export GRADLE_USER_HOME=/cache/.gradle
+
+cache:
+  key: ${CI_PROJECT_ID}
+  paths:
+  - .gradle/
+
+#job untuk checking
+check:
+  stage: check
+  script:
+      - ./gradlew --stacktrace clean assembleDebug
 
 
-####################################################################################################
-# BUILD
-#
-.build_template: &build_template_def
+#job untuk build
+build:
   stage: build
+  only:
+      - develop
+  script:
+    - ./gradlew --stacktrace clean assembleRelease
   artifacts:
-    expire_in: 4 hours
     paths:
-    - app/build/outputs/
-    - .android/
+    - app/build/outputs/apk
 
-  variables:
-    ANDROID_COMPILE_SDK: "27"
-    ANDROID_BUILD_TOOLS: "27.0.3"
-    ANDROID_SDK_TOOLS: "26.1.1"
-
-    before_script:
-      - apt-get --quiet update --yes
-      - apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
-      - export ANDROID_SDK_HOME=$PWD/__ci
-      - export ANDROID_HOME=$ANDROID_SDK_HOME/android-sdk-linux
-      - export GRADLE_USER_HOME=$ANDROID_SDK_HOME
-      - mkdir -p $ANDROID_HOME
-      - wget --quiet --output-document=$ANDROID_SDK_HOME/android-sdk-tools.zip https://dl.google.com/android/repository/tools_r${ANDROID_SDK_TOOLS}-linux.zip
-      - unzip $ANDROID_SDK_HOME/android-sdk-tools.zip -d $ANDROID_HOME
-      - echo y | $ANDROID_HOME/tools/android --silent update sdk --no-ui --all --filter android-${ANDROID_COMPILE_SDK}
-      - echo y | $ANDROID_HOME/tools/android --silent update sdk --no-ui --all --filter platform-tools
-      - echo y | $ANDROID_HOME/tools/android --silent update sdk --no-ui --all --filter build-tools-${ANDROID_BUILD_TOOLS}
-      - echo y | $ANDROID_HOME/tools/android --silent update sdk --no-ui --all --filter extra-android-m2repository
-      - echo y | $ANDROID_HOME/tools/android --silent update sdk --no-ui --all --filter extra-google-google_play_services
-      - echo y | $ANDROID_HOME/tools/android --silent update sdk --no-ui --all --filter extra-google-m2repository
-      - export PATH=$PATH:$ANDROID_HOME/platform-tools/
-      - export LD_LIBRARY_PATH=${ANDROID_HOME}/tools/lib64
-      - chmod +x ./gradlew
-      # configure system gradle
-      - mkdir -p $GRADLE_USER_HOME/.gradle/
-      - echo "org.gradle.jvmargs=-Xmx2048M" > $GRADLE_USER_HOME/.gradle/gradle.properties
-      # auto accept licenses
-      - mkdir "$ANDROID_HOME/licenses" || true
-      - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
-      - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
-
-
-build_debug:
-  <<: *build_template_def
+#job untuk deploy
+deploy:
+  stage: deploy
   only:
-    - develop
-
+      - master
   script:
-    - ./gradlew assembleDebug
-
-build_release:
-  <<: *build_template_def
-  only:
-    - master
-  script:
-    - ./gradlew assembleRelease
-
-####################################################################################################
-# UNIT TESTING
-#
-
-unit_test:
-  stage: test
-  only:
-    - master
-    - develop
-
-  before_script:
-    - export ANDROID_HOME=$PWD/.android
-    - export PATH=$PATH:$PWD/.android/platform-tools/
-
-  script:
-    - ./gradlew test
-
-
-####################################################################################################
-# PACKAGE APK FOR DOWNLOADING
-#
-
-.package_template: &package_template_def
-  before_script:
-    - export VERSION_NAME=`egrep '^[[:blank:]]+versionName[[:blank:]]'  app/build.gradle | awk '{print $2}' | sed s/\"//g`
-    - export VERSION_CODE=`egrep '^[[:blank:]]+versionCode[[:blank:]]'  app/build.gradle | awk '{print $2}'`
-    - mkdir -p deliverables
-
-    # Store some information about the build
-    - touch ./deliverables/info.txt
-    - echo "Build date          $(date)"                >> ./deliverables/info.txt
-    - echo "App version name    ${VERSION_NAME}"        >> ./deliverables/info.txt
-    - echo "App version code    ${VERSION_CODE}"        >> ./deliverables/info.txt
-    - echo "Git branch          ${CI_COMMIT_REF_NAME}"  >> ./deliverables/info.txt
-    - echo "Git commit          ${CI_COMMIT_SHA}"       >> ./deliverables/info.txt
-    - echo "Gitlab pipeline     ${CI_PIPELINE_ID}"      >> ./deliverables/info.txt
-
-
-package_develop:
-  <<: *package_template_def
-  stage: package
-  environment: Development
-  only:
-    - develop
-  script:
-    - mv app/build/outputs/apk/app-debug.apk ./deliverables/NameOfTheApp-v$VERSION_NAME-$VERSION_CODE-debug.apk
+    - ./gradlew --stacktrace clean assembleRelease
   artifacts:
-    expire_in: 3 days
     paths:
-    - deliverables
-
-package_release:
-  <<: *package_template_def
-  stage: package
-  environment: Release
-  only:
-    - master
-    - tags
-  script:
-    - mv app/build/outputs/apk/app-release.apk ./deliverables/NameOfTheApp-v$VERSION_NAME-$VERSION_CODE-release.apk
-  artifacts:
-    expire_in: 4 weeks
-    paths:
-    - deliverables
+    - app/build/outputs/apk

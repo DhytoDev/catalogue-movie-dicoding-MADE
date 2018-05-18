@@ -1,43 +1,43 @@
-image: pratamawijaya/gitlab-ci-android
-
-stages:
-- check
-- build
-- deploy
-
-before_script:
-  - export GRADLE_USER_HOME=/cache/.gradle
-
-cache:
-  key: ${CI_PROJECT_ID}
-  paths:
-  - .gradle/
-
-#job untuk checking
-check:
-  stage: check
-  script:
-      - ./gradlew --stacktrace clean assembleDebug
-
-
-#job untuk build
-build:
-  stage: build
-  only:
-      - develop
-  script:
-    - ./gradlew --stacktrace clean assembleRelease
-  artifacts:
-    paths:
-    - app/build/outputs/apk
-
-#job untuk deploy
-deploy:
-  stage: deploy
-  only:
-      - master
-  script:
-    - ./gradlew --stacktrace clean assembleRelease
-  artifacts:
-    paths:
-    - app/build/outputs/apk
+#image: pratamawijaya/gitlab-ci-android
+#
+#stages:
+#- check
+#- build
+#- deploy
+#
+#before_script:
+#  - export GRADLE_USER_HOME=/cache/.gradle
+#
+#cache:
+#  key: ${CI_PROJECT_ID}
+#  paths:
+#  - .gradle/
+#
+##job untuk checking
+#check:
+#  stage: check
+#  script:
+#      - ./gradlew --stacktrace clean assembleDebug
+#
+#
+##job untuk build
+#build:
+#  stage: build
+#  only:
+#      - develop
+#  script:
+#    - ./gradlew --stacktrace clean assembleRelease
+#  artifacts:
+#    paths:
+#    - app/build/outputs/apk
+#
+##job untuk deploy
+#deploy:
+#  stage: deploy
+#  only:
+#      - master
+#  script:
+#    - ./gradlew --stacktrace clean assembleRelease
+#  artifacts:
+#    paths:
+#    - app/build/outputs/apk

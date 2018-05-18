@@ -74,4 +74,5 @@ public abstract class BaseFragment extends Fragment implements MvpView {
         super.onDestroy();
     }
     protected abstract void setUp(View view);
+
 }

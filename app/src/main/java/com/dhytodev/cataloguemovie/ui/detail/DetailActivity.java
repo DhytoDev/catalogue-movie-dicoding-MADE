@@ -93,15 +93,17 @@ public class DetailActivity extends BaseActivity implements DetailView, View.OnC
         setUnbinder(ButterKnife.bind(this));
         setUp();
 
-        if (savedInstanceState == null) {
+        if (savedInstanceState == null || !savedInstanceState.containsKey("movie")) {
             movie = getIntent().getParcelableExtra(MOVIE_INTENT);
-            if (movie != null) {
-                displayDetails(movie);
-                presenter.onAttach(this);
-                presenter.fetchTrailers(String.valueOf(movie.getId()));
-                presenter.isMovieFavorited(movie);
-                Log.e(TAG, "onCreate: " + String.valueOf(movie.getId()));
-            }
+        } else {
+            movie = savedInstanceState.getParcelable("movie");
+        }
+
+        if (movie != null) {
+            displayDetails(movie);
+            presenter.onAttach(this);
+            presenter.fetchTrailers(String.valueOf(movie.getId()));
+            presenter.isMovieFavorited(movie);
         }
     }
 
@@ -125,6 +127,12 @@ public class DetailActivity extends BaseActivity implements DetailView, View.OnC
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable("movie", movie);
     }
 
     private void displayDetails(Movie movie) {

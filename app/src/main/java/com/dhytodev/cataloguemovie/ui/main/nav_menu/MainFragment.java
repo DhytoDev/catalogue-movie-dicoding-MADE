@@ -2,6 +2,8 @@ package com.dhytodev.cataloguemovie.ui.main.nav_menu;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -49,6 +51,9 @@ public class MainFragment extends BaseFragment implements MainView, RecyclerView
     protected List<Movie> movies = new ArrayList<>();
     protected MainPresenter<MainView, MainInteractor> presenter;
 
+    Bundle savedInstanceState;
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -82,6 +87,24 @@ public class MainFragment extends BaseFragment implements MainView, RecyclerView
     public void onDestroyView() {
         super.onDestroyView();
         presenter.onDetach();
+    }
+
+   /* @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        this.savedInstanceState = savedInstanceState;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putParcelableArrayList("movies", (ArrayList<? extends Parcelable>) movies);
+        super.onSaveInstanceState(outState);
+    }*/
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putParcelableArrayList("movies", (ArrayList<? extends Parcelable>) movies);
     }
 
     @Override

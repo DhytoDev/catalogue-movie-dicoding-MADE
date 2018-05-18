@@ -7,13 +7,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
+import com.dhytodev.cataloguemovie.data.model.Movie;
 import com.dhytodev.cataloguemovie.ui.main.nav_menu.MainFragment;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class UpcomingFragment extends MainFragment implements SwipeRefreshLayout.OnRefreshListener {
-
 
     public UpcomingFragment() {
         // Required empty public constructor
@@ -22,7 +24,12 @@ public class UpcomingFragment extends MainFragment implements SwipeRefreshLayout
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter.fetchMovies(1);
+        if (savedInstanceState != null) {
+            List<Movie> movies = savedInstanceState.getParcelableArrayList("movies");
+            presenter.fetchMoviesFromState(movies);
+        } else {
+            presenter.fetchMovies(1);
+        }
         refresh.setOnRefreshListener(this);
     }
 

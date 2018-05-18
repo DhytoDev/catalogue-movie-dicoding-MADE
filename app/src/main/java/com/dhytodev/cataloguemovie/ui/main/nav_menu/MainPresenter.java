@@ -1,5 +1,6 @@
 package com.dhytodev.cataloguemovie.ui.main.nav_menu;
 
+import android.os.Bundle;
 import android.util.Log;
 
 import com.dhytodev.cataloguemovie.data.model.Movie;
@@ -22,6 +23,10 @@ public class MainPresenter<V extends MainView, I extends MainInteractor> extends
         super(mvpInteractor, compositeDisposable);
     }
 
+    public void fetchMoviesFromState(List<Movie> movies) {
+        getMvpView().displayMovies(movies);
+    }
+
     public void fetchMovies(int movie) {
         getMvpView().showLoading(true);
 
@@ -41,6 +46,7 @@ public class MainPresenter<V extends MainView, I extends MainInteractor> extends
                 .subscribe(movies -> {
                     getMvpView().showLoading(false);
                     getMvpView().displayMovies(movies);
+
                 }, throwable -> {
                     getMvpView().showLoading(false);
                     getMvpView().onError(throwable.getLocalizedMessage());

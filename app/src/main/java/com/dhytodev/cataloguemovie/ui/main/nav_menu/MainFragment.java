@@ -51,9 +51,6 @@ public class MainFragment extends BaseFragment implements MainView, RecyclerView
     protected List<Movie> movies = new ArrayList<>();
     protected MainPresenter<MainView, MainInteractor> presenter;
 
-    Bundle savedInstanceState;
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -88,18 +85,6 @@ public class MainFragment extends BaseFragment implements MainView, RecyclerView
         super.onDestroyView();
         presenter.onDetach();
     }
-
-   /* @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-        this.savedInstanceState = savedInstanceState;
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putParcelableArrayList("movies", (ArrayList<? extends Parcelable>) movies);
-        super.onSaveInstanceState(outState);
-    }*/
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {

@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <permission
         android:name="com.dhytodev.cataloguemovie.READ_DATABASE"
@@ -48,7 +50,14 @@
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.settings.SettingsActivity" />
+        <activity
+            android:name=".ui.settings.SettingsActivity"
+            android:label="Settings"
+            android:parentActivityName=".ui.main.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.main.MainActivity" />
+        </activity>
 
         <provider
             android:name=".data.local.DatabaseMovieProvider"
@@ -67,9 +76,16 @@
                 android:resource="@xml/favorite_widget_info" />
         </receiver>
 
-        <receiver android:name=".data.service.reminder.DailyAlarmReceiver"
+        <receiver
+            android:name=".data.service.reminder.DailyAlarmReceiver"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="false">
+        </receiver>
+
+        <receiver
+            android:name=".data.service.reminder.UpcomingAlarmReceiver"
+            android:enabled="true"
+            android:exported="false" />
 
         <service
             android:name=".data.service.StackWidgetService"

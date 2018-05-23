@@ -34,12 +34,12 @@ public class MainInteractorImpl extends BaseInteractor<MovieService> implements 
 
     @Override
     public Observable<List<Movie>> fetchUpComingMovies() {
-        return getService().getUpcomingMovies().flatMap(moviesResponse -> Observable.just(moviesResponse.results));
+        return getService().getUpcomingMovies().flatMap(moviesResponse -> Observable.just(moviesResponse.getResults()));
     }
 
     @Override
     public Observable<List<Movie>> fetchNowPlayingMovies() {
-        return getService().getNowPlayingMovies().flatMap(moviesResponse -> Observable.just(moviesResponse.results));
+        return getService().getNowPlayingMovies().flatMap(moviesResponse -> Observable.just(moviesResponse.getResults()));
     }
 
     @Override

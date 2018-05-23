@@ -5,7 +5,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
+import com.dhytodev.cataloguemovie.data.model.Movie;
 import com.dhytodev.cataloguemovie.ui.main.nav_menu.MainFragment;
+
+import java.util.List;
 
 /**
  * Created by izadalab on 12/02/18.
@@ -16,14 +19,14 @@ public class FavoriteFragment extends MainFragment implements SwipeRefreshLayout
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter.fetchMovies(2);
-        refresh.setOnRefreshListener(this);
-    }
+        if (savedInstanceState != null) {
+            List<Movie> movies = savedInstanceState.getParcelableArrayList("movies");
+            presenter.fetchMoviesFromState(movies);
+        } else {
+            presenter.fetchMovies(2);
+        }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        presenter.fetchMovies(2);
+        refresh.setOnRefreshListener(this);
     }
 
     @Override

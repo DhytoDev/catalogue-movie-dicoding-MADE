@@ -3,24 +3,34 @@ package com.dhytodev.cataloguemovie.ui.settings;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
+
 import android.preference.PreferenceFragment;
 import android.preference.SwitchPreference;
 import android.provider.Settings;
-import android.support.annotation.Nullable;
+
+import android.util.Log;
 import android.widget.Toast;
 
 import com.dhytodev.cataloguemovie.R;
+import com.dhytodev.cataloguemovie.data.model.Movie;
+import com.dhytodev.cataloguemovie.data.network.MovieService;
 import com.dhytodev.cataloguemovie.data.service.reminder.DailyAlarmReceiver;
+import com.dhytodev.cataloguemovie.data.service.reminder.UpcomingAlarmReceiver;
+
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindString;
 import butterknife.ButterKnife;
+import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * Created by izadalab on 26/02/18.
  */
 
 public class SettingsPreferenceFragment extends PreferenceFragment
-        implements Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
+        implements Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener, SettingsView {
 
     @BindString(R.string.key_setting_locale)
     String keySettingLocale;
@@ -29,21 +39,33 @@ public class SettingsPreferenceFragment extends PreferenceFragment
     @BindString(R.string.key_reminder_upcoming)
     String keyUpcomingReminder;
 
-    private SwitchPreference switchDailyReminder ;
-    private SwitchPreference switchUpcomingReminder ;
+    private SwitchPreference switchDailyReminder;
+    private SwitchPreference switchUpcomingReminder;
+
+
+    private SettingsPresenter<SettingsView, SettingsInteractor> presenter;
+    private UpcomingAlarmReceiver alarmReceiver ;
+    private List<Movie> movies = new ArrayList<>();
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
 
         ButterKnife.bind(this, getActivity());
+
+        alarmReceiver = new UpcomingAlarmReceiver();
 
         switchDailyReminder = (SwitchPreference) findPreference(keyDailyReminder);
         switchDailyReminder.setOnPreferenceChangeListener(this);
         switchUpcomingReminder = (SwitchPreference) findPreference(keyUpcomingReminder);
         switchUpcomingReminder.setOnPreferenceChangeListener(this);
         findPreference(keySettingLocale).setOnPreferenceClickListener(this);
+
+
+        SettingsInteractor interactor = new SettingsInteractorImpl(MovieService.ServiceGenerator.instance());
+        presenter = new SettingsPresenter<>(interactor, new CompositeDisposable());
+        presenter.onAttach(this);
     }
 
     @Override
@@ -62,31 +84,59 @@ public class SettingsPreferenceFragment extends PreferenceFragment
     @Override
     public boolean onPreferenceChange(Preference preference, Object o) {
         String key = preference.getKey();
+        boolean isOn = (boolean) o;
 
         DailyAlarmReceiver dailyAlarmReceiver = new DailyAlarmReceiver();
 
         if (key.equals(keyDailyReminder)) {
-            if (switchDailyReminder.isChecked()) {
-                Toast.makeText(getActivity(), "Unchecked", Toast.LENGTH_SHORT).show();
-                switchDailyReminder.setChecked(false);
-                dailyAlarmReceiver.cancelAlarm(getActivity());
-                return false ;
-            } else {
-                Toast.makeText(getActivity(), "Checked", Toast.LENGTH_SHORT).show();
-                switchDailyReminder.setChecked(true);
+            if (isOn) {
                 dailyAlarmReceiver.setRepeatingAlarm(getActivity());
-                return true ;
+            } else {
+                dailyAlarmReceiver.cancelAlarm(getActivity());
             }
         } else {
-            if (switchUpcomingReminder.isChecked()) {
-                Toast.makeText(getActivity(), "Unchecked", Toast.LENGTH_SHORT).show();
-                switchUpcomingReminder.setChecked(false);
-                return false ;
+            if (isOn) {
+                presenter.setRepeatingAlarm();
+
             } else {
-                Toast.makeText(getActivity(), "Checked", Toast.LENGTH_SHORT).show();
-                switchUpcomingReminder.setChecked(true);
-                return true ;
+                presenter.cancelAlarm();
+
             }
         }
+
+        return true;
+
+    }
+
+    @Override
+    public void onError(int resId) {
+
+    }
+
+    @Override
+    public void onError(String message) {
+
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showMessage(int resId) {
+        Toast.makeText(getActivity(), resId, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setAlarm(Movie movie) {
+        this.movies.clear();
+        this.movies.add(movie);
+        alarmReceiver.setRepeatingAlarm(getActivity(), movies);
+    }
+
+    @Override
+    public void cancelAlarm() {
+        alarmReceiver.cancelAlarm(getActivity());
     }
 }

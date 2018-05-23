@@ -20,6 +20,6 @@ public class SearchInteractorImpl extends BaseInteractor<MovieService> implement
 
     @Override
     public Observable<List<Movie>> fetchSearchMovies(String movieName) {
-        return getService().searchMovies(movieName).flatMap(moviesResponse -> Observable.just(moviesResponse.results));
+        return getService().searchMovies(movieName).flatMap(moviesResponse -> Observable.just(moviesResponse.getResults()));
     }
 }

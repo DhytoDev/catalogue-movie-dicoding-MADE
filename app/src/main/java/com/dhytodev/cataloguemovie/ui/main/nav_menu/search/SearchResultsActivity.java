@@ -3,6 +3,7 @@ package com.dhytodev.cataloguemovie.ui.main.nav_menu.search;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -59,6 +60,7 @@ public class SearchResultsActivity extends BaseActivity implements RecyclerViewI
             String query = getIntent().getStringExtra(SearchManager.QUERY);
             presenter.getSearchMovies(query);
         }
+
     }
 
     @Override
@@ -67,6 +69,18 @@ public class SearchResultsActivity extends BaseActivity implements RecyclerViewI
         presenter.onDetach();
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList("movies", (ArrayList<? extends Parcelable>) movies);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        List<Movie> movies = savedInstanceState.getParcelableArrayList("movies");
+        presenter.getSearchMoviesFromState(movies);
+    }
 
     @Override
     protected void setUp() {

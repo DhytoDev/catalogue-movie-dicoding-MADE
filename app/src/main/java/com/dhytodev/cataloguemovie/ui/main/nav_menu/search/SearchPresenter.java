@@ -1,6 +1,9 @@
 package com.dhytodev.cataloguemovie.ui.main.nav_menu.search;
 
+import com.dhytodev.cataloguemovie.data.model.Movie;
 import com.dhytodev.mybasemvp.BasePresenter;
+
+import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -14,6 +17,10 @@ public class SearchPresenter extends BasePresenter<SearchView, SearchInteractor>
 
     public SearchPresenter(SearchInteractor mvpInteractor, CompositeDisposable compositeDisposable) {
         super(mvpInteractor, compositeDisposable);
+    }
+
+    public void getSearchMoviesFromState(List<Movie> movies) {
+        getMvpView().displayMovies(movies);
     }
 
     public void getSearchMovies(String movieName) {
